@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Patatap</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/patatap.css">
+	<script type="text/javascript" src = "assets/js/lib/jquery-3.2.1.min.js"></script> 
+	<script type="text/javascript" src = "assets/js/paper-full.js"></script> 
+	<script type="text/javascript" src = "assets/js/howler.min.js"></script>
+	<script type="text/paperscript" canvas="myCanvas">
+	
+	var sound = new Howl({
+  		src: ['sounds/bubbles.mp3','sounds/clay.mp3']
+	});
+ 	
+
+
+	var lista = [];
+
+	function onKeyDown(event) {
+		
+		
+		var maxPoint = new Point(view.size.width, view.size.height);
+		var randomPoint = Point.random();
+		var pointt = maxPoint * randomPoint;
+		
+
+		switch(event.key){
+			case 'a':
+				var krug = new Path.Circle(pointt, 100);
+				krug.fillColor = "blue";
+				lista.push(krug);
+				break;
+			case 'b':
+				var linija = new Path();
+				linija.strokeColor = 'red';
+				linija.fillColor = 'yellow';
+				linija.add(pointt);
+				linija.add(new Point(100, 50));
+				lista.push(linija);
+				break;
+			case 'c':
+				var myPath = new Path();
+				myPath.strokeColor = 'black';
+				myPath.add(new Point(40, 90));
+				myPath.add(new Point(90, 40));
+				myPath.add(new Point(140, 90));
+				myPath.closed = true;
+				myPath.fillColor = "green";
+				lista.push(myPath);
+				break;
+			default:
+				var tijelo = new Path.Rectangle({point:pointt,size: 100,fillColor : "orange"});
+				lista.push(tijelo);	
+		}	
+
+	}
+
+	function onFrame(event){
+		for(var i = 0; i < lista.length; i++){
+			lista[i].fillColor.hue += 1;
+			lista[i].rotate(5);
+			lista[i].scale(.94);
+		}
+	}
+
+
+
+	
+	
+</script>
+</head>
+<body>
+
+<canvas id="myCanvas"></canvas>
+
+
+<script type="text/javascript" src="assets/js/patatap.js"></script>
+</body>
+</html>

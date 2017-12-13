@@ -1,0 +1,19 @@
+#container{
+	border: 2px solid gray;
+	width: 450px;
+	margin: 0 auto;
+
+}
+#input{
+	border: 2px solid black;
+	width: 430px;
+}
+
+.completed{
+	color: gray;
+	text-decoration: line-through;
+}
+
+ul{
+	text-align: center;
+}

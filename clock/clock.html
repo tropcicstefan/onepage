@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>js + css clock</title>
+</head>
+<body>
+
+<div class= "clock">
+	<div class ="clock-face">
+		<div class="hand hour-hand"></div>
+		<div class="hand min-hand"></div>
+		<div class="hand second-hand"></div>
+		<div id="tag"></div>
+	</div>
+</div>
+
+<style type="text/css">
+	html{
+		background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
+		background-size: cover;
+		font-family:'helvetica neue';
+		text-align: center;
+		font-size: 10px;
+	}
+	body{
+		margin: 0;
+		font-size: 2rem;
+		display: flex;
+		flex: 1;
+		min-height: 100vh;
+		align-items: center;
+	}
+	.clock{
+		width: 30rem;
+		height: 30rem;
+		border: 20px solid white;
+		border-radius: 50%;
+		margin: 50px auto;
+		position: relative;
+		padding: 2rem;
+		box-shadow: 
+			0 0 0 4px rgba(0,0,0,0.1),
+			inset 0 0 0 3px #EFEFEF,
+			inset 0 0 10px black,
+			0 0 10px rgba(0,0,0,0.2);
+	}
+	.clock-face{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		transform: translateY(-3px);/*pomakne sve prema dolje*/
+	}
+	.hand{
+		width: 50%;
+		height: 6px;
+		background: black;
+		position: absolute;
+		top:50%;
+		transform-origin: 100%;/*osnova po kojoj se vrti*/
+		transform: rotate(89.5deg);
+		transition: all 0.05s;/*pri promjeni polozaju nije instant vec mala tranzicija i ovaj sljedeci*/
+		/*transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);*/
+	}
+	
+
+</style>
+
+<script type="text/javascript">
+	const secondHand = document.querySelector('.second-hand');
+	const minHand = document.querySelector('.min-hand');
+	const hrHand = document.querySelector('.hour-hand');
+	var time = false;
+	var tag = document.querySelector('#tag');
+
+	function setSeconds(){
+		const now = new Date();
+		const seconds = now.getSeconds();
+		const secondsDegrees = ((seconds/60)*360) + 89.5;
+		secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+		console.log(seconds);
+		if(time == false){
+			time = true;
+			setMinutes(now);
+			setHour(now);
+		}
+		if(seconds == 0){
+			setMinutes(now);
+		}
+		
+	}
+
+	function setMinutes(now){
+		
+		const minutes = now.getMinutes();
+		const minDegrees = ((minutes/60)*360) + 89.5;
+		minHand.style.transform = `rotate(${minDegrees}deg)`;
+		console.log("minute");
+		if(minutes == 0){
+			setHour();
+		}
+	}
+
+	function setHour(now){
+		
+		const hour = now.getHours();
+		const hrDegrees = ((hour/12)*360) + 89.5;
+		hrHand.style.transform = `rotate(${hrDegrees}deg)`;
+		if(hour<=12){
+			tag.innerHTML = "AM";
+		}else{
+			tag.innerHTML = "PM";
+		}
+	}
+
+	setInterval(setSeconds, 1000);
+	
+</script>
+
+
+</body>
+</html>
